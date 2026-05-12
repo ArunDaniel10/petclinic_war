@@ -50,7 +50,7 @@ pipeline {
                     groupId: 'com.petclinic',
                     version: '1.0',
                     repository: 'maven-releases',
-                    credentialsId: 'nexus-cred',
+                    credentialsId: 'Nexus',
                     artifacts: [
                         [
                             artifactId: 'petclinic',
@@ -66,7 +66,7 @@ pipeline {
         stage('Deploy to Tomcat') {
             steps {
                 deploy adapters: [tomcat9(
-                    credentialsId: 'tomcat-cred',
+                    credentialsId: 'tomcat',
                     path: '',
                     url: 'http://54.81.200.201:8080'
                 )],
