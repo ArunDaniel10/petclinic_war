@@ -41,27 +41,26 @@ pipeline {
         }
 
         stage('Upload to Nexus') {
-            steps {
-                nexusArtifactUploader(
-                    nexusVersion: 'nexus3',
-                    protocol: 'http',
-                    nexusUrl: '18.209.29.3:8081',
-                    groupId: 'com.petclinic',
-                    version: '1.0',
-                    repository: 'maven-releases',
-                    credentialsId: 'Nexus',
-                    artifacts: [
-                        [
-                            artifactId: 'petclinic',
-                            classifier: '',
-                            file: 'target/petclinic.war',
-                            type: 'war'
-                        ]
-                    ]
-                )
-            }
-        }
-
+    steps {
+        nexusArtifactUploader(
+            nexusVersion: 'nexus3',
+            protocol: 'http',
+            nexusUrl: '18.209.29.3:8081',
+            groupId: 'com.petclinic',
+            version: "1.0-${env.BUILD_NUMBER}",
+            repository: 'maven-releases',
+            credentialsId: 'Nexus',
+            artifacts: [
+                [
+                    artifactId: 'petclinic',
+                    classifier: '',
+                    file: 'target/petclinic.war',
+                    type: 'war'
+                ]
+            ]
+        )
+    }
+}
         stage('Deploy to Tomcat') {
             steps {
                 deploy adapters: [tomcat9(
