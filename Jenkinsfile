@@ -47,8 +47,8 @@ pipeline {
             protocol: 'http',
             nexusUrl: '18.209.29.3:8081',
             groupId: 'com.petclinic',
-            version: "1.0-${env.BUILD_NUMBER}",
-            repository: 'maven-releases',
+            version: '1.0-SNAPSHOT',
+            repository: 'maven-snapshots',
             credentialsId: 'Nexus',
             artifacts: [
                 [
@@ -60,16 +60,13 @@ pipeline {
             ]
         )
     }
-}
+}       
         stage('Deploy to Tomcat') {
     steps {
         sh '''
-        curl -v -u admin:admin123 \
+        curl -u admin:admin123 \
         -T target/petclinic.war \
         "http://54.81.200.201:8080/manager/text/deploy?path=/petclinic&update=true"
         '''
-    }
-}
-    
     }
 }
