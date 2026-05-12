@@ -10,8 +10,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main',
-                    url: 'https://github.com/ArunDaniel10/petclinic_war.git',
-                    credentialsId: 'github-cred'
+                    url: 'https://github.com/ArunDaniel10/petclinic_war.git'
             }
         }
 
@@ -72,21 +71,6 @@ pipeline {
                 )],
                 war: 'target/petclinic.war'
             }
-        }
-    }
-
-    post {
-
-        success {
-            mail to: 'arun11raja@gmail.com',
-                 subject: 'PetClinic Pipeline Success',
-                 body: 'PetClinic WAR built and deployed successfully.'
-        }
-
-        failure {
-            mail to: 'arun11raja@gmail.com',
-                 subject: 'PetClinic Pipeline Failed',
-                 body: 'Pipeline execution failed. Check Jenkins console output.'
         }
     }
 }
